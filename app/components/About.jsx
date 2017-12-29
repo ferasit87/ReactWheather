@@ -3,7 +3,10 @@ const React = require('react');
 
 var About =  (props) => {
   return (
-      <h3> About component </h3>
+    <div>
+      <h3> About</h3>
+      <p>Welocme to the about page.</p>
+    </div>
     );
 };
 
