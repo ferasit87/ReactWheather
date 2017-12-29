@@ -2,9 +2,19 @@ const express = require('express');
 
 //create your app
 app = express();
+const PORT = process.env.PORT || 3000 ;
 
-app.use(express.static('public'))
-app.listen(3000 , () => {
+app.use(function (req, res, err){
+  if (req.headers['x-forwarded-proto'] === 'http') {
+    next();
+  }else {
+    res.redirect('http://'+ req.hostname + req.url);
+  }
+});
 
-    console.log("I am running on port 3000");
+app.use(express.static('public'));
+
+
+app.listen(PORT , () => {
+    console.log("I am running on port "+PORT);
 })
