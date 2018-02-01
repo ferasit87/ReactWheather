@@ -31,7 +31,15 @@ module.exports = {
       Examples: 'app/components/Examples.jsx',
       openWeatherMap: 'app/api/openWeatherMap.jsx',
       ErrorModal: 'app/components/ErrorModal.jsx',
-      applicationStyles: 'app/styles/app.scss'
+      applicationStyles: 'app/styles/app.scss',
+      Authentication: 'app/components/Authentication.jsx',
+      AuthForm: 'app/components/AuthForm.jsx',
+      myrest: 'app/api/MyRest.jsx',
+      AddOrder: 'app/components/AddOrder.jsx',
+      AddOrderForm: 'app/components/AddOrderForm.jsx',
+      Orders: 'app/components/Orders.jsx',
+      EditOrder: 'app/components/EditOrder.jsx',
+      EditOrderForm: 'app/components/EditOrderForm.jsx',
     },
     extensions: ['', '.js', '.jsx']
   },

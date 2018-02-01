@@ -1,10 +1,11 @@
 var React = require('react');
+var {Link, IndexLink} = require('react-router');
 
-var About =  React.createClass({
+var Orders =  React.createClass({
     renderTable : () => {
       var rows= [];
        for (var i = 0; i < 9; i++) {
-          rows.push(<tr><td>Stir Fry</td><td>stir-fry</td><td className="center">  - </td></tr>);
+          rows.push(<tr><td>Stir Fry</td><td>stir-fry</td><td className="center">  <Link   to={{ pathname: '/editOrder/', query: { id: i } }}  activeClassName="active"  activeStyle={{fontWeight: 'bold'}}>edit </Link> </td></tr>);
       }
        return (rows);
       },
@@ -29,4 +30,4 @@ var About =  React.createClass({
   )}
 });
 
-module.exports = About;
+module.exports = Orders;

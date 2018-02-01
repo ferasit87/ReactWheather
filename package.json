@@ -12,7 +12,9 @@
   "dependencies": {
     "axios": "^0.17.1",
     "express": "^4.16.2",
+    "immutability-helper": "^2.6.4",
     "react": "^0.14.7",
+    "react-data-grid": "^3.0.9",
     "react-dom": "^0.14.7",
     "react-router": "^2.0.0"
   },

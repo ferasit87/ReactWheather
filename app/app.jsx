@@ -5,6 +5,10 @@ var Main = require('Main');
 var Weather = require('Weather');
 var About = require('About');
 var Examples = require('Examples');
+var Authentication = require('Authentication');
+var Orders = require('Orders');
+var AddOrder = require('AddOrder');
+var EditOrder = require('EditOrder');
 
 // Load foundation
 require('style!css!foundation-sites/dist/foundation.min.css')
@@ -16,9 +20,10 @@ require('style!css!sass!applicationStyles')
 ReactDOM.render(
   <Router history={hashHistory}>
     <Route path="/" component={Main}>
-      <Route path="about" component={About}/>
-      <Route path="examples" component={Examples}/>
-      <IndexRoute component={Weather}/>
+      <Route path="addOrder" component={AddOrder}/>
+      <Route path="orders" component={Orders}/>
+      <Route path="editOrder" component={EditOrder}/>
+      <IndexRoute component={Authentication}/>
     </Route>
   </Router>,
   document.getElementById('app')
