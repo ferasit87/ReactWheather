@@ -1,7 +1,7 @@
 var axios = require('axios');
 
-const LOGIN_URL = 'http://locacalhost:/index.php/?r=login';
-const GET_ORDER_URL = 'http://locacalhost:/index.php/?r=login';
+const LOGIN_URL = 'http://localhost:3000/login/';
+const GET_ORDER_URL = 'http://localhost:3000/order/';
 
 module.exports = {
   logIn: function (logIn, passwd) {
@@ -10,7 +10,7 @@ module.exports = {
     passwd
   })
   .then(function (res) {
-      return 'fdsfasrewrawfdsfewfw';
+      return res.data;
     }, function (res) {
       throw new Error(res.data.message);
     });
@@ -20,7 +20,7 @@ module.exports = {
     id
   })
   .then(function (res) {
-      return 'fdsfasrewrawfdsfewfw';
+      return res.data;
     }, function (res) {
       throw new Error(res.data.message);
     });

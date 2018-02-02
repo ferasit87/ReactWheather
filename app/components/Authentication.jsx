@@ -16,6 +16,8 @@ var Authentication = React.createClass({
     this.setState({
       isLoading: true,
       isAuth : false,
+      userID : undefined,
+      token : undefined ,
       errorMessage: undefined,
       logIn: undefined,
       passwd: undefined,
@@ -24,7 +26,7 @@ var Authentication = React.createClass({
 
     myrest.logIn(logIn, passwd).then(function (result) {
       that.setState({
-        userID: result.userID,
+        userID: result.id,
         token: result.token,
         isAuth: true,
         isLoading: false
@@ -57,13 +59,13 @@ var Authentication = React.createClass({
     }
   },
   render: function () {
-    var {isLoading, temp, logIn, isAuth, passwd, errorMessage} = this.state;
+    var {isLoading, temp, userID, token,isAuth } = this.state;
     var that = this;
     function renderForm () {
       if (isLoading) {
         return <h3 className="text-center">LogInnn...</h3>;
       } else if (isAuth) {
-        return  <h3 className="text-center">Welcome user {this.state.logIn}</h3>;
+        return  <h3 className="text-center">Welcome user {userID}</h3>;
       }else {
         return <AuthForm onLogIn={that.handleLogIn}/>
       }
