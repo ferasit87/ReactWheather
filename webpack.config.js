@@ -34,6 +34,9 @@ module.exports = {
       Orders: 'app/components/Orders.jsx',
       EditOrder: 'app/components/EditOrder.jsx',
       EditOrderForm: 'app/components/EditOrderForm.jsx',
+      actions: 'app/actions/actions.jsx',
+      reducers: 'app/reducers/reducers.jsx',
+      configureStore: 'app/store/configureStore.jsx'
     },
     extensions: ['', '.js', '.jsx']
   },

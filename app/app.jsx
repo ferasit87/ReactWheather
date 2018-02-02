@@ -7,6 +7,15 @@ var Orders = require('Orders');
 var AddOrder = require('AddOrder');
 var EditOrder = require('EditOrder');
 
+var {Provider} = require('react-redux');
+
+var store = require('configureStore').configure();
+
+store.subscribe(() => {
+  console.log('New state', store.getState());
+});
+
+
 // Load foundation
 require('style!css!foundation-sites/dist/foundation.min.css')
 $(document).foundation();
@@ -15,6 +24,7 @@ $(document).foundation();
 require('style!css!sass!applicationStyles')
 
 ReactDOM.render(
+  <Provider store={store}>
   <Router history={hashHistory}>
     <Route path="/" component={Main}>
       <Route path="addOrder" component={AddOrder}/>
@@ -22,6 +32,7 @@ ReactDOM.render(
       <Route path="editOrder" component={EditOrder}/>
       <IndexRoute component={Authentication}/>
     </Route>
-  </Router>,
+  </Router>
+</Provider>,
   document.getElementById('app')
 );
