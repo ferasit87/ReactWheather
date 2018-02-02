@@ -23,7 +23,7 @@ var AddOrder = React.createClass({
       temp: undefined
     });
 
-    myrest.AddOrder(name, sum).then(function (result) {
+    myrest.addOrder(this.props.userID, name, sum).then(function (result) {
       that.setState({
         result : result ,
         isLoading: false

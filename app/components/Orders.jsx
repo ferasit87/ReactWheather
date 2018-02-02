@@ -1,18 +1,50 @@
 var React = require('react');
 var {Link, IndexLink} = require('react-router');
 var {connect} = require('react-redux');
+var myrest = require('myrest');
 
 var Orders =  React.createClass({
-    renderTable : () => {
-      var rows= [];
-       for (var i = 0; i < 9; i++) {
+  getInitialState: function () {
+    return  {
+      orders : [],
+      isLoading: false
+    } ;
+  },
+componentDidMount: function () {
+
+  var that = this ;
+  myrest.getOreders(this.props.token).then(function (result) {
+     if (that.isMounted()){
+      that.setState({
+        orders: [result],
+        isLoading: false
+      });
+    }
+    }, function (e) {
+       if (that.isMounted()){
+      that.setState({
+        isLoading: false,
+        errorMessage: e.message
+      });
+      }
+    }) ;
+
+  },
+  renderTable : function (orders) {
+
+      var rows= orders;
+       for (var i = 0; i < orders.length; i++) {
           rows.push(<tr><td>Stir Fry</td><td>stir-fry</td><td className="center">  <Link   to={{ pathname: '/editOrder/', query: { id: i } }}  activeClassName="active"  activeStyle={{fontWeight: 'bold'}}>edit </Link> </td></tr>);
       }
        return (rows);
       },
   render: function () {
+    var that = this;
+    var {isLoading, orders, errorMessage} = this.state;
+
     if (this.props.auth){
-            return (
+
+        if (!errorMessage) return (
             <div>
               <h1> All orders </h1>
           <div id="table" className="table-editable">
@@ -24,12 +56,14 @@ var Orders =  React.createClass({
              <th>Value</th>
             <th>Action</th>
            </tr>
-              { this.renderTable() }
+              { that.renderTable(this.state.orders) }
          </tbody>
          </table>
        </div>
       </div>
-      );
+    );else {
+      return (<h2>API ERROR {errorMessage}</h2>)
+    }
     }
     return               <Link to="/">You should LogIn First</Link>
 

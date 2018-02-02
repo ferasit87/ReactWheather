@@ -20,14 +20,32 @@ app.post('/login', (req, res) => {
     token: '1dasdas21df3s2a1fdsa3f2s1'
     });
 });
-
 app.post('/order', (req, res) => {
   return res.send({
     name: 'fdsfds',
     sum: 123
     });
 });
+app.post('/orders', (req, res) => {
+  return res.send({
+      name: 'fdsfdsadads',
+      sum: 123
+    });
 
+});
+app.post('/order/add', (req, res) => {
+  return res.send({
+    name: 'fdsfds',
+    sum: 123
+    });
+});
+
+app.post('/order/edit', (req, res) => {
+  return res.send({
+    name: 'fdsfds',
+    sum: 123
+    });
+});
 app.listen(PORT , () => {
     console.log("I am running on port "+PORT);
 })

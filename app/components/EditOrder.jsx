@@ -11,9 +11,20 @@ var {connect} = require('react-redux');
 
 var EditOrder = React.createClass({
   getInitialState: function () {
-    return {
-      isLoading: false
+    myrest.getOreder(this.props.token,this.props.params.orderID).then(function (result) {
+        return {
+          name : result.name ,
+          sum : result.sum ,
+          orderID : result.orderID,
+          isLoading: false
+        }
+    }, function (e) {
+        return {
+        isLoading: false,
+        errorMessage: e.message
     }
+    });
+    
   },
   editOrder: function (name, sum) {
     var that = this;
@@ -22,11 +33,10 @@ var EditOrder = React.createClass({
       isLoading: true,
       errorMessage: undefined,
       name: undefined,
-      sum: undefined,
-      temp: undefined
-    });
+      sum: undefined
+     });
 
-    myrest.EditOrder(name, sum).then(function (result) {
+    myrest.EditOrder( this.props.token, name, sum).then(function (result) {
       that.setState({
         result : result ,
         isLoading: false
@@ -39,18 +49,7 @@ var EditOrder = React.createClass({
     });
   },
   render: function () {
-    myrest.getOreder(this.props.params).then(function (result) {
-      that.setState({
-        name : result.name ,
-        sum : result.sum ,
-        isLoading: false
-      });
-    }, function (e) {
-      that.setState({
-        isLoading: false,
-        errorMessage: e.message
-      });
-    });
+
     var {isLoading, name, sum, errorMessage} = this.state;
     var that = this;
     function renderForm () {
@@ -76,7 +75,7 @@ var EditOrder = React.createClass({
     return (
 
       <div>
-        <h1 className="text-center page-title">Adding Order Form</h1>
+        <h1 className="text-center page-title">Edit Order Form</h1>
         {renderForm()}
         {renderError()}
       </div>
