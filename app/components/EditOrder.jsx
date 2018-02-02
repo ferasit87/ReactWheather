@@ -5,6 +5,8 @@ var ErrorModal = require('ErrorModal');
 var myrest = require('myrest');
 var ReactDOM = require('react-dom');
 var {Route, Router, withRouter, IndexRoute, hashHistory} = require('react-router');
+var {Link, IndexLink} = require('react-router');
+var {connect} = require('react-redux');
 
 
 var EditOrder = React.createClass({
@@ -70,15 +72,27 @@ var EditOrder = React.createClass({
         )
       }
     }
-
+    if (this.props.auth){
     return (
+
       <div>
         <h1 className="text-center page-title">Adding Order Form</h1>
         {renderForm()}
         {renderError()}
       </div>
-    )
+    );
+  }else{
+    return               <Link to="/">You should LogIn First</Link>
+  }
   }
 });
 
-module.exports = EditOrder;
+module.exports = connect(
+  (state) =>{
+    return {
+      auth : state.auth ,
+      token : state.token,
+      userID : state.userID
+    };
+  }
+)(EditOrder);

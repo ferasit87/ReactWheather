@@ -2,6 +2,8 @@ var React = require('react');
 var AddOrderForm = require('AddOrderForm');
 var ErrorModal = require('ErrorModal');
 var myrest = require('myrest');
+var {connect} = require('react-redux')
+var {Link, IndexLink} = require('react-router');
 
 
 var AddOrder = React.createClass({
@@ -37,11 +39,16 @@ var AddOrder = React.createClass({
     var {isLoading, name, sum, errorMessage} = this.state;
     var that = this;
     function renderForm () {
-      if (isLoading) {
-        return <h3 className="text-center">Addingggg...</h3>;
-      } else{
-        return <AddOrderForm addOrder={that.addOrder}/>
+      if (that.props.auth){
+        if (isLoading) {
+          return <h3 className="text-center">Addingggg...</h3>;
+        } else{
+          return <AddOrderForm addOrder={that.addOrder}/>
+        }
+      }else {
+        return               <Link to="/">You should LogIn First</Link>
       }
+
     }
 
 
@@ -63,4 +70,12 @@ var AddOrder = React.createClass({
   }
 });
 
-module.exports = AddOrder;
+module.exports =  connect(
+  (state) =>{
+    return {
+      auth : state.auth ,
+      token : state.token,
+      userID : state.userID
+    };
+  }
+)(AddOrder);

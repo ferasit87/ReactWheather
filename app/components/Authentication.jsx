@@ -2,7 +2,7 @@ var React = require('react');
 var AuthForm = require('AuthForm');
 var ErrorModal = require('ErrorModal');
 var myrest = require('myrest');
-
+var {connect} = require('react-redux')
 
 var Authentication = React.createClass({
   getInitialState: function () {
@@ -31,32 +31,49 @@ var Authentication = React.createClass({
         isAuth: true,
         isLoading: false
       });
+      var body = {
+        userID: result.id,
+        token: result.token,
+      }
+      that.props.dispatch({
+          type: 'LOGIN',
+          body
+        });
+
     }, function (e) {
       that.setState({
         isLoading: false,
         isAuth: false,
         errorMessage: e.message
+
       });
+      that.props.dispatch({
+          type: 'LOGOUT',
+          token : '',
+        });
     });
   },
   componentDidMount: function () {
-    var logIn = this.props.logIn ;
-    var passwd = this.props.passwd;
-
-
-    if (logIn && logIn.length > 0 && passwd && passwd.length > 0  ) {
-      this.logIn(logIn, passwd);
-      window.location.hash = '#/';
-    }
+    if (this.props.auth)
+      this.setState({
+        userID: this.props.userID,
+        token: this.props.token,
+        isAuth: true,
+        isLoading: false
+      });
   },
-  componentWillReceiveProps: function (newProps) {
-    var logIn = newProps.logIn.query.logIn;
-    var passwd = newProps.passwd.query.passwd;
+  handelLogout: function (e) {
+    this.setState({
+      isLoading: false,
+      isAuth: false,
+      errorMessage: e.message
 
-    if (logIn && logIn.length > 0 && passwd && passwd.length > 0  ) {
-      this.logIn(logIn, passwd);
-      window.location.hash = '#/';
-    }
+    });
+    this.props.dispatch({
+        type: 'LOGOUT',
+        token : '',
+      });
+
   },
   render: function () {
     var {isLoading, temp, userID, token,isAuth } = this.state;
@@ -65,7 +82,7 @@ var Authentication = React.createClass({
       if (isLoading) {
         return <h3 className="text-center">LogInnn...</h3>;
       } else if (isAuth) {
-        return  <h3 className="text-center">Welcome user {userID}</h3>;
+        return  <div><h3 className="text-center">Welcome user {userID}</h3><h6><a onClick={that.handelLogout} >LOGOUT</a>  </h6></div>;
       }else {
         return <AuthForm onLogIn={that.handleLogIn}/>
       }
@@ -89,4 +106,12 @@ var Authentication = React.createClass({
   }
 });
 
-module.exports = Authentication;
+module.exports = connect(
+  (state) =>{
+    return {
+      auth : state.auth ,
+      token : state.token,
+      userID : state.userID
+    };
+  }
+)(Authentication);

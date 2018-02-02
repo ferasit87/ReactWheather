@@ -1,21 +1,24 @@
 var redux = require('redux');
 var stateDefault = {
   token: '',
-  auth: false
+  auth: false,
+  userID : null ,
 };
 
 export var configure = () => {
   var reducer = (state = stateDefault, action) => {
   switch (action.type) {
-    case 'CHANGE_AUTH':
+    case 'LOGOUT':
       return {
-        token : state.token,
-        auth: action.auth
+        token : '',
+        auth: false,
+        userID : null ,
       };
-   case 'CHANGE_TOKEN':
+   case 'LOGIN':
         return {
-          auth : state.auth,
-          token: action.token
+          auth : true,
+          token: action.body.token,
+          userID : action.body.userID,
         };
     default:
       return state;
