@@ -27,10 +27,18 @@ app.post('/order', (req, res) => {
     });
 });
 app.post('/orders', (req, res) => {
-  return res.send({
-      name: 'fdsfdsadads',
-      sum: 123
-    });
+  var obj = {
+    results : [ {
+        name: 'fdsfdsadads',
+        sum: 123
+      }
+      ,{
+          name: 'fdsfdsadads',
+          sum: 123
+        }
+     ]
+  }
+  return res.send(obj);
 
 });
 app.post('/order/add', (req, res) => {

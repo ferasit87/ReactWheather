@@ -10,22 +10,33 @@ var {connect} = require('react-redux');
 
 
 var EditOrder = React.createClass({
+
+
   getInitialState: function () {
-    myrest.getOreder(this.props.token,this.props.params.orderID).then(function (result) {
-        return {
-          name : result.name ,
-          sum : result.sum ,
-          orderID : result.orderID,
-          isLoading: false
-        }
-    }, function (e) {
-        return {
-        isLoading: false,
-        errorMessage: e.message
-    }
-    });
-    
+  return {
+    name : '',
+    sum : 0 ,
+    orderID : 0 ,
+    isLoading : true
+  };
+
   },
+    componentDidMount: function () {
+      var that = this ;
+      myrest.getOreder(this.props.token,this.props.location.query.id).then(function (result) {
+          that.setState({
+            name : result.name ,
+            sum : result.sum ,
+            orderID : result.orderID,
+            isLoading: false
+          });
+      }, function (e) {
+            that.setState({
+          isLoading: false,
+          errorMessage: e.message
+      });
+      });
+    },
   editOrder: function (name, sum) {
     var that = this;
 
@@ -36,13 +47,17 @@ var EditOrder = React.createClass({
       sum: undefined
      });
 
-    myrest.EditOrder( this.props.token, name, sum).then(function (result) {
+    myrest.editOrder( this.props.token, name, sum).then(function (result) {
       that.setState({
+        name,
+        sum,
         result : result ,
         isLoading: false
       });
     }, function (e) {
       that.setState({
+        name,
+        sum,
         isLoading: false,
         errorMessage: e.message
       });
@@ -54,9 +69,9 @@ var EditOrder = React.createClass({
     var that = this;
     function renderForm () {
       if (isLoading) {
-        return <h3 className="text-center">Addingggg...</h3>;
+        return <h3 className="text-center">LoadING...</h3>;
       } else if (!errorMessage){
-        return <EditOrderForm editOrder={that.editOrder}/>
+        return <EditOrderForm editOrder={that.editOrder} name={name} sum={sum}/>
       }
       else{
         return <h3 className="text-center">Order not found</h3>;

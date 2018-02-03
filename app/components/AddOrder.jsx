@@ -9,7 +9,8 @@ var {Link, IndexLink} = require('react-router');
 var AddOrder = React.createClass({
   getInitialState: function () {
     return {
-      isLoading: false
+      isLoading: false,
+      success : false
     }
   },
   addOrder: function (name, sum) {
@@ -23,9 +24,10 @@ var AddOrder = React.createClass({
       temp: undefined
     });
 
-    myrest.addOrder(this.props.userID, name, sum).then(function (result) {
+    myrest.addorder(this.props.userID, name, sum).then(function (result) {
       that.setState({
         result : result ,
+        success : true ,
         isLoading: false
       });
     }, function (e) {
@@ -43,7 +45,7 @@ var AddOrder = React.createClass({
         if (isLoading) {
           return <h3 className="text-center">Addingggg...</h3>;
         } else{
-          return <AddOrderForm addOrder={that.addOrder}/>
+          return <AddOrderForm addOrder={that.addOrder} success={that.state.success}/>
         }
       }else {
         return               <Link to="/">You should LogIn First</Link>

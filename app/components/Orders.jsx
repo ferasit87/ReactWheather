@@ -13,31 +13,35 @@ var Orders =  React.createClass({
 componentDidMount: function () {
 
   var that = this ;
+
   myrest.getOreders(this.props.token).then(function (result) {
-     if (that.isMounted()){
+
       that.setState({
-        orders: [result],
+        orders: result,
         isLoading: false
       });
-    }
+
     }, function (e) {
-       if (that.isMounted()){
+
       that.setState({
         isLoading: false,
         errorMessage: e.message
       });
-      }
+
     }) ;
 
   },
   renderTable : function (orders) {
-
-      var rows= orders;
-       for (var i = 0; i < orders.length; i++) {
-          rows.push(<tr><td>Stir Fry</td><td>stir-fry</td><td className="center">  <Link   to={{ pathname: '/editOrder/', query: { id: i } }}  activeClassName="active"  activeStyle={{fontWeight: 'bold'}}>edit </Link> </td></tr>);
+    if (orders.results){
+      var rows= orders.results;
+      var result = [] ;
+       for (var i = 0; i < rows.length; i++) {
+          result.push(<tr><td>{rows[i].name}</td><td>{rows[i].sum}</td><td className="center">  <Link   to={{ pathname: '/editOrder/', query: { id: i } }}  activeClassName="active"  activeStyle={{fontWeight: 'bold'}}>edit </Link> </td></tr>);
       }
-       return (rows);
-      },
+       return (result);
+     }
+     return null;
+   },
   render: function () {
     var that = this;
     var {isLoading, orders, errorMessage} = this.state;
@@ -56,7 +60,7 @@ componentDidMount: function () {
              <th>Value</th>
             <th>Action</th>
            </tr>
-              { that.renderTable(this.state.orders) }
+              { that.renderTable(that.state.orders) }
          </tbody>
          </table>
        </div>
