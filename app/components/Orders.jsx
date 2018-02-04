@@ -36,7 +36,7 @@ componentDidMount: function () {
       var rows= orders.results;
       var result = [] ;
        for (var i = 0; i < rows.length; i++) {
-          result.push(<tr><td>{rows[i].name}</td><td>{rows[i].sum}</td><td className="center">  <Link   to={{ pathname: '/editOrder/', query: { id: i } }}  activeClassName="active"  activeStyle={{fontWeight: 'bold'}}>edit </Link> </td></tr>);
+          result.push(<tr><td>{rows[i].name}</td><td>{rows[i].sum}</td><td className="center">  <Link   to={{ pathname: '/editOrder/', query: { id: rows[i].id } }}  activeClassName="active"  activeStyle={{fontWeight: 'bold'}}>edit </Link> </td></tr>);
       }
        return (result);
      }

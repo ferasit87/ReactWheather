@@ -47,7 +47,7 @@ var EditOrder = React.createClass({
       sum: undefined
      });
 
-    myrest.editOrder( this.props.token, name, sum).then(function (result) {
+    myrest.editOrder( this.props.token,this.props.location.query.id, name, sum).then(function (result) {
       that.setState({
         name,
         sum,
